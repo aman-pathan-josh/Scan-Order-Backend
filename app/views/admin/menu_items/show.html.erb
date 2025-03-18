@@ -1,0 +1,16 @@
+<div class="container mx-auto px-4 py-8">
+  <div>
+      <h1><%= @menu_item.item_name %></h1>
+  </div>
+
+  <div>
+    <h2>Restaurant Details</h2>
+    <p>Item: <%= @menu_item.item_name %></p>
+    <p>Description: <%= @menu_item.description %></p>
+    <p>Price: <%= @menu_item.price %></p>
+    <%=image_tag @menu_item.menu_image%>
+    <%= link_to 'Edit Menu Item', edit_admin_restaurant_menu_item_path(@menu_item) , class: "btn btn-warning"%>
+    <%= link_to 'See Reviews',admin_restaurant_menu_item_reviews_path(@restaurant,@menu_item) , class: "btn btn-primary"%>
+    <%= link_to 'Back to Menu Items', admin_restaurant_menu_items_path , class: "btn btn-secondary"%>
+  </div>
+</div>

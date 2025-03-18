@@ -1,0 +1,30 @@
+<h1>Edit User</h1>
+
+<%= form_for @user, url: super_admin_user_path(@user) do |f| %>
+  <div>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email%>
+  </div>
+
+  <div>
+    <%= f.label :phone_number %>
+    <%= f.text_field :phone_number %>
+  </div>
+
+  <div>
+    <%= f.label :roles %>
+    <%= f.collection_select :role_ids, Role.all, :id, :role, {}, { multiple: true } %>
+  </div>
+
+  <%= f.submit "Update User", class: "btn btn-success" %>
+<% end %>

@@ -1,0 +1,41 @@
+<div class="user_div">
+    <h2>Users</h2>
+    <table class="user-table">
+        <thead class="text-center">
+            <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+            <tr>
+                <td><%= user.first_name %> <%= user.last_name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.roles.map(&:role).join(", ") %></td>
+                <td>
+                <%= link_to "Edit", edit_super_admin_user_path(user), class: "btn btn-primary" %>
+                <%= link_to "Delete", super_admin_user_path(user), data: {turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+<style>
+  .user_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-table{
+    width: 70%;
+  }
+  tr{
+    border-bottom: 1px solid #333;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Tables</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      border: none;
+    }
+    .table-header {
+      background-color: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+    }
+    .qr-icon {
+      font-size: 1.4rem;
+      color: #3b82f6;
+    }
+    .btn-add-table {
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+    }
+    .btn-add-table:hover {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+    .table-responsive {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .actions-column {
+      width: 180px;
+    }
+    .empty-state {
+      padding: 3rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h1 class="display-6 fw-bold mb-0">
+              <i class="fas fa-chair me-2 text-primary"></i>Tables
+            </h1>
+            <p class="text-muted mb-0">Manage your restaurant's tables</p>
+          </div>
+          <div class="d-flex gap-2">
+            <%= link_to admin_restaurants_path, class: "btn btn-outline-secondary" do %>
+              <i class="fas fa-arrow-left me-2"></i>Go Back
+            <% end %>
+            <%= link_to new_admin_restaurant_restaurant_table_path(@restaurant), class: "btn btn-primary btn-add-table" do %>
+              <i class="fas fa-plus me-2"></i>Add Table
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-header">
+                  <tr>
+                    <th class="px-4 py-3 text-center" style="width: 80px">ID</th>
+                    <th class="px-4 py-3 text-center">QR Code</th>
+                    <th class="px-4 py-3 text-end actions-column">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if @restaurant_tables.any? %>
+                    <% @restaurant_tables.each do |table| %>
+                      <tr class="table-row">
+                        <td class="px-4 py-3 text-center align-middle">
+                          <span class="badge bg-secondary bg-opacity-75 fw-normal"><%= table.id %></span>
+                        </td>
+                        <td class="px-4 py-3 text-center align-middle">
+                          <%= link_to admin_restaurant_restaurant_table_path(table.restaurant_id, table), class: "btn btn-sm btn-outline-primary" do %>
+                            <i class="fas fa-qrcode me-2"></i>See QR Code
+                          <% end %>
+                        </td>
+                        <td class="px-4 py-3 text-end align-middle">
+                          <%= link_to admin_restaurant_restaurant_table_path(table.restaurant_id, table), data: {turbo_method: :delete, turbo_confirm: "Are you sure? QR Code will be deleted" }, class: "font-bold justify-center d-flex text-white p-1 bg-danger text-decoration-none rounded" do%>            
+                            <i class="fas fa-trash me-1"></i>Delete
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% else %>
+                    <tr>
+                      <td colspan="3" class="empty-state">
+                        <div class="text-center py-4">
+                          <i class="fas fa-chair fa-3x text-secondary mb-3"></i>
+                          <h5>No Tables Yet</h5>
+                          <p class="text-muted">Add your first table to get started</p>
+                          <%= link_to new_admin_restaurant_restaurant_table_path(@restaurant), class: "btn btn-primary mt-2" do %>
+                            <i class="fas fa-plus me-2"></i>Add Table
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

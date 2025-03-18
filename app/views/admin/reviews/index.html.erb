@@ -1,0 +1,9 @@
+<h1>Reviews</h1>
+<h4><%=@menu_item.item_name%></h4>
+<% @reviews.each do |review|%>
+    <p><%=review.id%></p>
+    <p><%=review.rating%></p>
+    <p><%=review.comment%></p>
+<%= link_to "Delete", admin_restaurant_menu_item_review_path(restaurant_id: review.menu_item.restaurant.id, menu_item_id: @menu_item.id, id: review.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure? review will be deleted" }, class: "font-bold text-white p-1 bg-danger text-decoration-none rounded" %>
+<%end%>
+

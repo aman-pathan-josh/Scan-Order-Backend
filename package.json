@@ -1,0 +1,22 @@
+{
+  "name": "app",
+  "private": true,
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "esbuild": "^0.24.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.10"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.12",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "crypto-js": "^4.2.0",
+    "jquery": "^3.7.1",
+    "react-qr-reader": "^3.0.0-beta-1"
+  }
+}

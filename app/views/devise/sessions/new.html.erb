@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #4e73df;
+      --primary-dark: #3a5fc8;
+      --secondary-color: #f8f9fc;
+      --accent-color: #ff6b6b;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: "Rubik", sans-serif;
+    }
+    
+    .login-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 100%;
+      max-width: 450px;
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      padding: 30px;
+      text-align: center;
+      color: white;
+    }
+    
+    .login-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+    
+    .login-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    
+    .login-body {
+      padding: 30px;
+    }
+    
+    .form-floating {
+      margin-bottom: 20px;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+    }
+    
+    .password-container {
+      position: relative;
+    }
+    
+    .password-requirement {
+      font-size: 12px;
+      color: #6c757d;
+      margin-top: 5px;
+      font-style: italic;
+    }
+    
+    .custom-checkbox {
+      cursor: pointer;
+    }
+    
+    .btn-login {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      font-weight: 600;
+      padding: 10px 0;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+    
+    .btn-login:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(78, 115, 223, 0.4);
+    }
+    
+    .alternative-links {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .food-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+    }
+    .alert-danger{
+      display: none;
+    }
+    .notice-danger{
+      display: none;
+    }
+    .alert-notification {
+      font-size: 0.875rem;
+      padding: 0.5rem;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      background-color: #f8d7da;
+      border-color: #f5c2c7;
+      color: #842029;
+      border-radius: 0.25rem;
+    }
+    
+    .error_icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="food-icon">
+        <i class="fas fa-utensils"></i>
+      </div>
+      <h1>Welcome Back!</h1>
+    </div>
+    
+    <div class="login-body">
+        <%= render "devise/shared/errors", resource: resource %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        
+        <div class="form-floating mb-3">
+          <%= f.email_field :email, class: "form-control", id: "floatingEmail", placeholder: "name@example.com", required: true %>
+          <%= f.label :email, "Email address", for: "floatingEmail" %>
+        </div>
+        
+        <div class="form-floating">
+          <%= f.password_field :password, class: "form-control", id: "floatingPassword", placeholder: "Password", required: true %>
+          <%= f.label :password, "Password", for: "floatingPassword" %>
+        </div>
+        
+        <% if @minimum_password_length %>
+          <div class="password-requirement">
+            <i class="fas fa-info-circle"></i> <%= @minimum_password_length %> characters minimum
+          </div>
+        <% end %>
+        
+        <% if devise_mapping.rememberable? %>
+          <div class="form-check mt-3">
+            <%= f.check_box :remember_me, class: "form-check-input", id: "rememberCheck" %>
+            <%= f.label :remember_me, class: "form-check-label custom-checkbox", for: "rememberCheck" do %>
+              Remember me
+            <% end %>
+          </div>
+        <% end %>
+        
+        <%= f.submit "Login", class: "btn btn-primary btn-login w-100" %>
+        
+        <div class="alternative-links">
+          <%= render "devise/shared/links" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

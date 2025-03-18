@@ -1,0 +1,26 @@
+<%= form_with(model: @restaurant_table, url: @restaurant_table.persisted? ? admin_restaurant_restaurant_table_path(@restaurant, @restaurant_table) : admin_restaurant_restaurant_tables_path(@restaurant), local: true, class: "space-y-6") do |f| %>
+
+  <% if @restaurant_table.errors.any? %>
+    <div class="bg-red-50 p-4 rounded">
+      <h2 class="text-red-800 font-medium">
+        <%= pluralize(@restaurant_table.errors.count, "error") %> prohibited this restaurant table from being saved:
+      </h2>
+      <ul class="list-disc list-inside text-red-600">
+        <% @restaurant_table.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+   <% if @restaurant_table.persisted? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <%= button_to "Generate QR Code", generate_qr_admin_restaurant_restaurant_table_path(@restaurant_table.restaurant, @restaurant_table), method: :post, class: "btn btn-success" %>
+    </div>
+  <% end %> 
+
+  <div class="flex justify-end space-x-3">
+    <%= link_to 'cancel', admin_restaurant_restaurant_tables_path, class: "font-bold text-white p-2 bg-primary text-decoration-none rounded" %>
+    <%= f.submit class: "font-bold text-white p-1 bg-success text-decoration-none rounded" %>
+  </div>
+<% end %>

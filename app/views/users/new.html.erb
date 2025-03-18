@@ -1,0 +1,11 @@
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center">
+    <h1>Add New User</h1>
+
+    <%= form_with model: @user do |f| %>
+        <%= f.text_field :first_name, placeholder:"Enter your first name" %><br>
+        <%= f.text_field :last_name, placeholder:"Enter your last name" %><br>
+        <%= f.text_field :email, placeholder:"Enter your email" %><br>
+        <%= f.text_field :phone_number, placeholder:"Enter your phone number" %><br>
+        <%= f.submit%>
+    <%end%>
+</div>

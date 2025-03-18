@@ -1,0 +1,17 @@
+<div style="display: flex;justify-content:center;flex-direction:column;align-items:center">
+    <h1>List of all Users:</h1>
+
+    <table style="width: 60%;">
+        <tr>
+            <th style="border:1px solid #000;height:50px">Name</th>
+            <th style="border:1px solid #000;height:50px">Actions</th>
+        </tr>
+        <% @users.each do |user|%>
+            <tr>
+                <td style="border:1px solid #000;width: 20%; height:30px; text-align:center"> <%= user.first_name%> </td>
+                <td style="border:1px solid #000;width: 40%; height:30px; text-align:center"> <%= link_to "Show", user%> <%= link_to "Edit", edit_user_path(user), method:'get' %> <%= link_to "Delete", user, data: {turbo_method: :delete, turbo_confirm: "Are you sure? #{user.first_name}'s data will be deleted" } %> </td>
+            </tr>
+        <%end%>
+    </table>
+    <td style="border:1px solid #000;width: 40%; height:30px; text-align:center"> <%= link_to "Add New User", new_user_path%> </td>
+</div>

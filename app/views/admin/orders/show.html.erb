@@ -1,0 +1,44 @@
+<h1>Order Details</h1>
+
+<p><strong>Order ID:</strong> <%= @order.id %></p>
+<p><strong>Table:</strong> Table <%= @order.restaurant_table.id %></p>
+<p><strong>User:</strong> <%= @order.user.first_name %> <%= @order.user.last_name %></p>
+<p><strong>Total Amount:</strong> ₹<%= @order.order_amount %></p>
+<p><strong>Status:</strong> <%= @order.order_status %></p>
+
+<h2>Order Items</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Quantity</th>
+      <th>Item Price</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_carts.each do |order_cart| %>
+      <tr>
+        <td><%= order_cart.menu_item.item_name %></td>
+        <td><%= order_cart.quantity %></td>
+        <td><%= order_cart.menu_item.price %></td>
+        <td>₹<%= order_cart.total_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Update Order Status</h2>
+<%= form_with model: @order, url: admin_restaurant_order_path(@restaurant, @order), method: :patch do |f| %>
+  <p>
+    <%= f.label :order_status %>
+    <%= f.select :order_status, ["pending", "preparing", "served", "completed"], class: "form-control" %>
+  </p>
+  <p>
+    <%= f.submit "Update Order", class: "btn btn-success" %>
+  </p>
+<% end %>
+
+<p>
+  <%= link_to "Back to Orders", admin_restaurant_orders_path(@restaurant), class: "btn btn-secondary" %>
+</p>

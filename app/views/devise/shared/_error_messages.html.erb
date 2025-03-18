@@ -1,0 +1,7 @@
+<% if resource.errors.any? %>
+  <%# <ul class="alert-message-container"> %>
+    <% resource.errors.full_messages.each do |message| %>
+      <p class="alert-notification alert"><%= image_tag("alert_icon.png", :class => "error_icon") %> <%= message %></p>
+    <% end %>
+  <%# </ul> %>
+<% end %>

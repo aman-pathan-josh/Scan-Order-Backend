@@ -1,0 +1,9 @@
+<% if notice.present? %>
+    <p class="notice-notification notice"><%= notice%></p>
+<%end%>
+<% if alert.present? %>
+    <p class="alert-notification alert">
+        <%= image_tag("alert_icon.png", :class => "error_icon") %>
+        <%= alert %>
+    </p>
+<%end%>
