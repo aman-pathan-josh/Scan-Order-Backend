@@ -1,44 +1,187 @@
-<h1>Order Details</h1>
+<style>
+        body {
+            font-family: "Rubik", sans-serif;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .action-buttons .btn {
+            margin-right: 5px;
+        }
+        .page-header {
+            border-bottom: 1px solid #e3e6f0;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        .table th {
+            background-color: #f8f9fc;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f8f9fc;
+        }
+        .btn-group-sm > .btn, .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
+        .order-info {
+            background-color: #fff;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem rgba(0, 0, 0, 0.15);
+            margin-bottom: 1.5rem;
+        }
+        .order-info-header {
+            border-bottom: 1px solid #e3e6f0;
+            padding: 1rem;
+        }
+        .order-info-body {
+            padding: 1.25rem;
+        }
+        .order-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+            text-transform: capitalize;
+        }
+        .status-pending {
+            background-color: #ffeeba;
+            color: #856404;
+        }
+        .status-preparing {
+            background-color: #bee5eb;
+            color: #0c5460;
+        }
+        .status-served {
+            background-color: #c3e6cb;
+            color: #155724;
+        }
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .btns{
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          margin-top:15px;
+          height:40px;
+        }
+    </style>
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="page-header d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-0 text-gray-800">Order Details</h1>
+            </div>
+            <div class="button-group">
+                <%= link_to admin_restaurant_orders_path(@restaurant), class: "btn btn-secondary" do %>
+                    <i class="fas fa-arrow-left me-1"></i> Back to Orders
+                <% end %>
+            </div>
+        </div>
 
-<p><strong>Order ID:</strong> <%= @order.id %></p>
-<p><strong>Table:</strong> Table <%= @order.restaurant_table.id %></p>
-<p><strong>User:</strong> <%= @order.user.first_name %> <%= @order.user.last_name %></p>
-<p><strong>Total Amount:</strong> ₹<%= @order.order_amount %></p>
-<p><strong>Status:</strong> <%= @order.order_status %></p>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Order Information</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="fw-bold">Order ID:</label>
+                            <span class="ms-2"><%= @order.id %></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">Table:</label>
+                            <span class="ms-2">Table <%= @order.restaurant_table.id %></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">User:</label>
+                            <span class="ms-2"><%= @order.user.first_name %> <%= @order.user.last_name %></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="fw-bold">Total Amount:</label>
+                            <span class="ms-2 fw-bold text-primary">₹<%= @order.order_amount %></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">Status:</label>
+                            <% status_class = case @order.order_status
+                               when "pending" then "status-pending"
+                               when "preparing" then "status-preparing"
+                               when "served" then "status-served"
+                               when "completed" then "status-completed"
+                               end %>
+                            <span class="ms-2 order-status <%= status_class %>"><%= @order.order_status %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<h2>Order Items</h2>
-<table border="1">
-  <thead>
-    <tr>
-      <th>Item Name</th>
-      <th>Quantity</th>
-      <th>Item Price</th>
-      <th>Total Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @order.order_carts.each do |order_cart| %>
-      <tr>
-        <td><%= order_cart.menu_item.item_name %></td>
-        <td><%= order_cart.quantity %></td>
-        <td><%= order_cart.menu_item.price %></td>
-        <td>₹<%= order_cart.total_amount %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Order Items</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-center">Item Price</th>
+                                <th class="text-center">Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @order.order_carts.each do |order_cart| %>
+                                <tr>
+                                    <td><%= order_cart.menu_item.item_name %></td>
+                                    <td class="text-center"><%= order_cart.quantity %></td>
+                                    <td class="text-center">₹<%= order_cart.menu_item.price %></td>
+                                    <td class="text-center fw-bold">₹<%= order_cart.total_amount %></td>
+                                </tr>
+                            <% end %>
+                            <tr class="table-active">
+                                <td colspan="3" class="text-end fw-bold">Total Amount:</td>
+                                <td class="text-center fw-bold">₹<%= @order.order_amount %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-<h2>Update Order Status</h2>
-<%= form_with model: @order, url: admin_restaurant_order_path(@restaurant, @order), method: :patch do |f| %>
-  <p>
-    <%= f.label :order_status %>
-    <%= f.select :order_status, ["pending", "preparing", "served", "completed"], class: "form-control" %>
-  </p>
-  <p>
-    <%= f.submit "Update Order", class: "btn btn-success" %>
-  </p>
-<% end %>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Update Order Status</h6>
+            </div>
+            <div class="card-body">
+                <%= form_with model: @order, url: admin_restaurant_order_path(@restaurant, @order), method: :patch do |f| %>
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <%= f.label :order_status, class: "form-label fw-bold" %>
+                                <%= f.select :order_status, ["pending", "preparing", "served", "completed"], {}, class: "form-select" %>
+                            </div>
+                        </div>
+                        <div class="col-md-6 btns">
+                            <div class="mb-3">
+                                <%= f.submit "Update Order", class: "btn btn-success" %>
+                                <%= link_to "Back to Orders", admin_restaurant_orders_path(@restaurant), class: "btn btn-secondary ms-2" %>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
 
-<p>
-  <%= link_to "Back to Orders", admin_restaurant_orders_path(@restaurant), class: "btn btn-secondary" %>
-</p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
