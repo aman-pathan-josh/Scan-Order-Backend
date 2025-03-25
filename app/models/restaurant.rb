@@ -1,8 +1,8 @@
 class Restaurant < ApplicationRecord
-  has_many :menu_items
-  has_many :restaurant_tables
-  has_many :orders
-  has_many :user_restaurants
+  has_many :menu_items,dependent: :destroy
+  has_many :restaurant_tables,dependent: :destroy
+  has_many :orders,dependent: :destroy
+  has_many :user_restaurants,dependent: :destroy
   has_many :users, through: :user_restaurants
 
   validates :restaurant_name, :address, presence: true

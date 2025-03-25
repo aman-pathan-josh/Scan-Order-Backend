@@ -5,7 +5,7 @@ RSpec.describe MenuItem, type: :model do
     it { should have_many(:reviews).dependent(:destroy) }
     it { should have_many(:order_carts) }
     it { should have_many(:orders).through(:order_carts) }
-    it { should have_one_attached(:image) }
+    it { should have_one_attached(:menu_image) }
   end
   describe 'validations' do
     it { should validate_presence_of(:item_name) }

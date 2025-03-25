@@ -4,7 +4,7 @@ require 'rqrcode'
 RSpec.describe RestaurantTable, type: :model do
   describe 'asscociation' do
     it { should belong_to :restaurant }
-    it { should have_many(:orders).dependent(:nullify) }
+    it { should have_many(:orders).dependent(:destroy) }
     it { should have_one_attached(:qrcode) }
   end
 
